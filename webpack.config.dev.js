@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   // debug: true, // removed in webpack2
@@ -39,6 +40,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/index.html',
+      inject: true,
+    }),
     // in order to get the live-reoad you need to use
     // webpack-hot-middleware to :(
     new webpack.HotModuleReplacementPlugin(),

@@ -1,7 +1,20 @@
 /* eslint-disable no-console */
-import numeral from 'numeral';
+import getUsers from './api/userApi';
 
-import './index.css';
+console.log('getting users dude');
 
-const courseValue = numeral(1000).format('$0,0.00');
-console.log(`I would plays ${courseValue} for this awesome course!`);
+getUsers().then((users) => {
+  let usersBody = '';
+
+  users.forEach((user) => {
+    usersBody += `<tr>
+      <td><a href="#" data-id="${user.id}" class="delete-user">Delete user</a></td>
+      <td>${user.id}</td>
+      <td>${user.firstName}</td>
+      <td>${user.lastName}</td>
+      <td>${user.email}</td>
+    </tr>`;
+  });
+
+  window.document.getElementById('users').innerHTML = usersBody;
+});

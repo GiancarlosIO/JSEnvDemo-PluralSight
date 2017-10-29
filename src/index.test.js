@@ -19,10 +19,10 @@ describe('index.html', () => {
     this.jsdom();
   });
 
-  it('should say hello', () => {
+  it('should have a h1 with a users text', () => {
     const h1 = window.document.getElementsByTagName('h1')[0];
 
-    expect(h1.innerHTML).to.equal('Hello world');
+    expect(h1.innerHTML).to.equal('Users:');
 
     window.close();
   });
