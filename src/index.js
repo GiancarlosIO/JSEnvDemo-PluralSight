@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
+import './index.css';
 import getUsers from './api/userApi';
 
-console.log('getting users dude');
+console.log('getting users');
 
 getUsers().then((users) => {
   let usersBody = '';

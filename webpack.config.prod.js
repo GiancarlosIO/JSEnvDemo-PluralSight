@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   // debug: true, // removed in webpack2
@@ -12,7 +13,7 @@ module.exports = {
   },
   target: 'web',
   output: {
-    filename: '[name].[chunkhash:5].js',
+    filename: '[name].[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
   },
@@ -28,11 +29,13 @@ module.exports = {
       {
         test: /\.(css|scss|sass)?$/,
         exclude: path.resolve(__dirname, 'node_modules'),
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'sass-loader',
+          ],
+        }),
       },
     ],
   },
@@ -42,6 +45,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
+    new ExtractTextPlugin('[name].[contenthash].css'),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
